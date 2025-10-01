@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocialHub - Connect & Share</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts for modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar - Fixed at top for easy access -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Logo and brand name -->
+            <div class="logo">
+                <i class="fas fa-share-nodes"></i>
+                <h2>SocialHub</h2>
+            </div>
+
+            <!-- Search bar for finding users -->
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Search for users..." 
+                    class="search-input"
+                    autocomplete="off"
+                >
+                <!-- Dropdown for search results -->
+                <div id="searchResults" class="search-results"></div>
+            </div>
+
+            <!-- User selector dropdown - Switch between different users -->
+            <div class="user-selector">
+                <i class="fas fa-user-circle"></i>
+                <select id="currentUser" class="user-dropdown">
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Left Sidebar - User profile information -->
+        <aside class="sidebar left-sidebar">
+            <div class="profile-card">
+                <!-- Current user profile picture -->
+                <div class="profile-pic-container">
+                    <img id="currentUserPic" src="" alt="Profile" class="profile-pic">
+                </div>
+                <!-- Current user details -->
+                <h3 id="currentUserName" class="profile-name"></h3>
+                <p id="currentUserBio" class="profile-bio"></p>
+                
+                <!-- User statistics -->
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="userPosts">0</span>
+                        <span class="stat-label">Posts</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="userLikes">0</span>
+                        <span class="stat-label">Likes Received</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="userComments">0</span>
+                        <span class="stat-label">Comments</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Links Section -->
+            <div class="quick-links">
+                <h4>Quick Links</h4>
+                <a href="#" class="link-item"><i class="fas fa-home"></i> Feed</a>
+                <a href="#" class="link-item"><i class="fas fa-user-friends"></i> Friends</a>
+                <a href="#" class="link-item"><i class="fas fa-bookmark"></i> Saved</a>
+                <a href="#" class="link-item"><i class="fas fa-cog"></i> Settings</a>
+            </div>
+        </aside>
+
+        <!-- Center Content - Main feed and post creation -->
+        <main class="main-content">
+            <!-- Create Post Section -->
+            <div class="create-post-card">
+                <h3>Create a Post</h3>
+                <div class="create-post-container">
+                    <!-- Text area for post content -->
+                    <textarea 
+                        id="postContent" 
+                        placeholder="What's on your mind?" 
+                        class="post-textarea"
+                        maxlength="280"
+                    ></textarea>
+                    
+                    <!-- Character counter -->
+                    <div class="char-counter">
+                        <span id="charCount">0</span>/280 characters
+                    </div>
+
+                    <!-- Image upload section -->
+                    <div class="image-upload-section">
+                        <label for="imageUpload" class="image-upload-label">
+                            <i class="fas fa-image"></i> Add Image
+                        </label>
+                        <input 
+                            type="file" 
+                            id="imageUpload" 
+                            accept="image/*" 
+                            class="image-input"
+                            style="display: none;"
+                        >
+                        <!-- Preview of uploaded image -->
+                        <div id="imagePreview" class="image-preview"></div>
+                    </div>
+
+                    <!-- Post button -->
+                    <button id="createPostBtn" class="btn-primary">
+                        <i class="fas fa-paper-plane"></i> Post
+                    </button>
+                </div>
+            </div>
+
+            <!-- Feed Container - All posts will appear here -->
+            <div id="feedContainer" class="feed-container">
+                <!-- Posts will be dynamically inserted here by JavaScript -->
+            </div>
+        </main>
+
+        <!-- Right Sidebar - Trending and suggestions -->
+        <aside class="sidebar right-sidebar">
+            <!-- All Users List -->
+            <div class="suggestions-card">
+                <h4>All Users</h4>
+                <div id="allUsersList" class="users-list">
+                    <!-- User suggestions will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Platform Info -->
+            <div class="info-card">
+                <h4>About SocialHub</h4>
+                <p>Connect with friends, share moments, and build your community.</p>
+                <div class="info-links">
+                    <a href="#">About</a>
+                    <a href="#">Help</a>
+                    <a href="#">Terms</a>
+                    <a href="#">Privacy</a>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- User Profile Modal - Opens when clicking on a user from search -->
+    <div id="userProfileModal" class="modal">
+        <div class="modal-content user-profile-modal">
+            <!-- Close button -->
+            <span class="close-modal">&times;</span>
+            
+            <!-- User profile header -->
+            <div class="profile-header">
+                <img id="modalUserPic" src="" alt="Profile" class="modal-profile-pic">
+                <div class="profile-info">
+                    <h2 id="modalUserName"></h2>
+                    <p id="modalUserBio"></p>
+                </div>
+            </div>
+
+            <!-- User statistics in modal -->
+            <div class="modal-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="modalUserPosts">0</span>
+                    <span class="stat-label">Posts</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="modalUserLikes">0</span>
+                    <span class="stat-label">Total Likes</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="modalUserComments">0</span>
+                    <span class="stat-label">Total Comments</span>
+                </div>
+            </div>
+
+            <!-- User's posts container -->
+            <div class="modal-posts-section">
+                <h3>Posts</h3>
+                <div id="modalUserPosts" class="modal-posts-container">
+                    <!-- User's posts will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comment Modal - Opens when viewing comments on a post -->
+    <div id="commentModal" class="modal">
+        <div class="modal-content comment-modal">
+            <span class="close-modal">&times;</span>
+            <h3>Comments</h3>
+            
+            <!-- Add comment section -->
+            <div class="add-comment-section">
+                <textarea 
+                    id="commentInput" 
+                    placeholder="Write a comment..." 
+                    class="comment-textarea"
+                ></textarea>
+                <button id="addCommentBtn" class="btn-primary">
+                    <i class="fas fa-comment"></i> Add Comment
+                </button>
+            </div>
+
+            <!-- Comments list -->
+            <div id="commentsList" class="comments-list">
+                <!-- Comments will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>
