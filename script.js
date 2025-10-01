@@ -15,7 +15,7 @@ const users = [
     },
     {
         id: 2,
-        name: "seema Sawardekar",
+        name: "seema Singh",
         bio: "Designer | Traveler | Photography 📸",
         profilePic: "https://i.pravatar.cc/150?img=45"
     },
@@ -924,3 +924,4 @@ function setupEventListeners() {
 
 // Wait for DOM to be fully loaded before initializing
 document.addEventListener('DOMContentLoaded', init);
+
