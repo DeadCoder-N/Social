@@ -22,7 +22,7 @@ const users = [
     {
         id: 3,
         name: "Dead Coder",
-        bio: "Entrepreneur | Fitness enthusiast | Motivational speaker 💪",
+        bio: "Entrepreneur",
         profilePic: "https://i.pravatar.cc/150?img=33"
     }
 ];
@@ -924,4 +924,5 @@ function setupEventListeners() {
 
 // Wait for DOM to be fully loaded before initializing
 document.addEventListener('DOMContentLoaded', init);
+
 
